@@ -1,1 +1,1 @@
-# tgbot_template
+# Timetable Bot
