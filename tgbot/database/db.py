@@ -8,7 +8,7 @@ async def db_start():
     db.commit()
 
 
-async def db_get_all_users_notify():
+async def db_get_users_notify():
     db = sqlite3.connect(r"tgbot/database/data.db")
     cur = db.cursor()
     users_notify = cur.execute("SELECT * FROM users_notify").fetchall()

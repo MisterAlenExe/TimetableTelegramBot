@@ -8,10 +8,25 @@ menu = InlineKeyboardMarkup(inline_keyboard=[
                              callback_data="timetable")
     ],
     [
-        InlineKeyboardButton(text="Settings",
-                             callback_data="settings")
+        InlineKeyboardButton(text="Subscribe to notify ❌",
+                             callback_data="subscribe_notify")
     ]
 ])
+
+
+menu_with_subscribe = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text="Talking",
+                             callback_data="talking_to_ai"),
+        InlineKeyboardButton(text="Timetable",
+                             callback_data="timetable")
+    ],
+    [
+        InlineKeyboardButton(text="Subscribe to notify ✔️",
+                             callback_data="subscribe_notify")
+    ]
+])
+
 
 timetable = InlineKeyboardMarkup(inline_keyboard=[
     [
@@ -42,3 +57,4 @@ btnBackToTimetable = InlineKeyboardMarkup(inline_keyboard=[
                              callback_data="back_to_timetable")
     ]
 ])
+
