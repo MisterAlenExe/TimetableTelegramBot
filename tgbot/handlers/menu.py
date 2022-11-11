@@ -1,7 +1,7 @@
 from aiogram import Dispatcher
 from aiogram.types import Message, CallbackQuery
 
-from tgbot.database.db import db_get_users_notify, db_add_new_user_notify
+from tgbot.database.db import db_get_users_notify, db_add_new_user_notify, db_delete_user_notify
 from tgbot.keyboards.inline import menu, menu_with_subscribe, timetable, btnBackToTimetable
 
 data_timetable = {
@@ -23,16 +23,10 @@ data_timetable = {
 
 
 async def show_menu(message: Message):
-    for user_id, _ in await db_get_users_notify():
-        if user_id == message.from_user.id:
-            await message.answer("Choose one button and click:", reply_markup=menu_with_subscribe)
-        else:
-            await message.answer("Choose one button and click:", reply_markup=menu)
-
-
-async def show_menu_talking(call: CallbackQuery):
-    await call.answer(cache_time=0)
-    await call.message.answer("You chose talking to AI")
+    if message.from_user.id in await db_get_users_notify():
+        await message.answer("Choose one button and click:", reply_markup=menu_with_subscribe)
+    else:
+        await message.answer("Choose one button and click:", reply_markup=menu)
 
 
 async def show_menu_timetable(call: CallbackQuery):
@@ -44,27 +38,21 @@ async def show_timetable(call: CallbackQuery):
         await call.message.edit_text(f"Your timetable on {call.data[0].upper() + call.data[1:]}:"
                                      f"\n\n{data_timetable[call.data]}", reply_markup=btnBackToTimetable)
     else:
-        for user_id, _ in await db_get_users_notify():
-            if user_id == call.from_user.id:
-                await call.message.edit_text("Choose one button and click", reply_markup=menu_with_subscribe)
-            else:
-                await call.message.edit_text("Choose one button and click", reply_markup=menu)
+        if call.from_user.id in await db_get_users_notify():
+            await call.message.edit_text("Choose one button and click", reply_markup=menu_with_subscribe)
+        else:
+            await call.message.edit_text("Choose one button and click", reply_markup=menu)
 
 
 async def show_menu_settings(call: CallbackQuery):
-    # await call.answer(call.from_user.id)
-    # await call.answer(await db_get_users_notify('id'))
-    # if call.from_user.id in await db_get_users_notify('id'):
-    #     await call.answer("You are in database.")
-    # else:
-    #     await call.answer("You are not in database.")
-    for user_id, _ in await db_get_users_notify():
-        if user_id == call.from_user.id:
-            await call.answer("You've already subscribed")
-        else:
-            await call.message.edit_text("Choose one button and click", reply_markup=menu_with_subscribe)
-            await call.answer("Now you've subscribed")
-            await db_add_new_user_notify(call.from_user.id, call.from_user.full_name)
+    if call.from_user.id in await db_get_users_notify():
+        await call.message.edit_text("Choose one button and click", reply_markup=menu)
+        await call.answer("Now you don't have subscription")
+        await db_delete_user_notify(call.from_user.id)
+    else:
+        await call.message.edit_text("Choose one button and click", reply_markup=menu_with_subscribe)
+        await call.answer("Now you have subscription")
+        await db_add_new_user_notify(call.from_user.id, call.from_user.full_name)
     await call.answer(cache_time=0)
 
 
@@ -73,7 +61,6 @@ def register_menu(dp: Dispatcher):
 
 
 def register_callback_menu(dp: Dispatcher):
-    dp.register_callback_query_handler(show_menu_talking, text="talking_to_ai")
     dp.register_callback_query_handler(show_menu_timetable, text=["timetable", "back_to_timetable"])
     dp.register_callback_query_handler(show_menu_settings, text="subscribe_notify")
     dp.register_callback_query_handler(show_timetable, text=["monday", "tuesday", "wednesday", "thursday",

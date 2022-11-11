@@ -2,8 +2,6 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 menu = InlineKeyboardMarkup(inline_keyboard=[
     [
-        InlineKeyboardButton(text="Talking",
-                             callback_data="talking_to_ai"),
         InlineKeyboardButton(text="Timetable",
                              callback_data="timetable")
     ],
@@ -16,8 +14,6 @@ menu = InlineKeyboardMarkup(inline_keyboard=[
 
 menu_with_subscribe = InlineKeyboardMarkup(inline_keyboard=[
     [
-        InlineKeyboardButton(text="Talking",
-                             callback_data="talking_to_ai"),
         InlineKeyboardButton(text="Timetable",
                              callback_data="timetable")
     ],
