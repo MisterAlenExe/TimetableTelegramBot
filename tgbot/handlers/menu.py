@@ -18,7 +18,8 @@ data_timetable = {
               "10:00-10:50 - Foreign Language - C1.2.221P",
     'saturday': "08:00-08:50 - Discrete Mathematics - C1.1.328L\n"
                 "09:00-09:50 - Discrete Mathematics - C1.1.328L\n"
-                "10:00-10:50 - Introduction to Programming - C1.2.229"
+                "10:00-10:50 - Introduction to Programming - C1.2.229\n"
+                "11:00-11:50 - Introduction to Programming - C1.2.229"
 }
 
 
