@@ -4,7 +4,7 @@ from datetime import date
 from aiogram import Dispatcher
 from aiogram import types
 
-from ..database.db import db_start, db_add_new_user_notify, db_get_users_notify, db_delete_user_notify
+from ..database.db import db_start, db_add_new_user_notify, db_get_users_notify, db_delete_user_notify, db_admin_get_users
 from .menu import data_timetable
 
 
@@ -30,8 +30,11 @@ async def cmd_create_db(message: types.Message):
 
 
 async def cmd_get_users(message: types.Message):
-    users = await db_get_users_notify()
-    await message.answer(users)
+    ids, names = await db_admin_get_users()
+    msg = ""
+    for i in range(0, len(ids)):
+        msg += f"{ids[i]} - {names[i]}\n"
+    await message.answer(msg)
 
 
 async def daily_notify(bot):

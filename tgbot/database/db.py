@@ -19,6 +19,19 @@ async def db_get_users_notify():
     return users
 
 
+async def db_admin_get_users():
+    db = sqlite3.connect(r"tgbot/database/data.db")
+    cur = db.cursor()
+    users_notify = cur.execute("SELECT * FROM users_notify").fetchall()
+    db.commit()
+    user_ids = []
+    user_names = []
+    for user_id, user_name in users_notify:
+        user_ids.append(user_id)
+        user_names.append(user_name)
+    return user_ids, user_names
+
+
 async def db_add_new_user_notify(user_id, user_name):
     db = sqlite3.connect(r"tgbot/database/data.db")
     cur = db.cursor()
