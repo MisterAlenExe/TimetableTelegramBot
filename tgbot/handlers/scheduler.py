@@ -4,7 +4,7 @@ from datetime import date
 
 from aiogram import Bot
 
-from tgbot.logger import logger, print_msg
+from tgbot.utils.logger import logger
 from tgbot.database.storage import Database
 from tgbot.keyboards.inline import add_delete_button
 

@@ -1,8 +1,8 @@
 import json
 
-from aiogram import Dispatcher, types
+from aiogram import Dispatcher
 
-from tgbot.logger import logger, print_msg
+from tgbot.utils.logger import logger, print_msg
 
 from tgbot.database.storage import Database
 from tgbot.keyboards.inline import *
