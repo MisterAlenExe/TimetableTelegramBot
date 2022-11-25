@@ -1,12 +1,10 @@
 from typing import Dict, Any
-
 from aiogram.dispatcher.middlewares import LifetimeControllerMiddleware
 from aiogram.types.base import TelegramObject
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 
 class SchedulerMiddleware(LifetimeControllerMiddleware):
-
     def __init__(self, scheduler: AsyncIOScheduler):
         super().__init__()
         self._scheduler = scheduler
