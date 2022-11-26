@@ -14,10 +14,12 @@ from tgbot.handlers.menu import register_menu
 from tgbot.handlers.admin import register_admin
 from tgbot.handlers.scheduler import register_schedulers
 from tgbot.filters.admin import AdminFilter
+from tgbot.middlewares.throttling import ThrottlingMiddleware
 from tgbot.middlewares.apscheduler import SchedulerMiddleware
 
 
 def register_all_middlewares(dp, scheduler):
+    dp.setup_middleware(ThrottlingMiddleware())
     dp.setup_middleware(SchedulerMiddleware(scheduler))
 
 

@@ -1,12 +1,14 @@
 from aiogram import Dispatcher, types
 
 from tgbot.utils.logger import logger, print_msg
+from tgbot.utils.throttling import rate_limit
 
 from tgbot.database.storage import Database
 from tgbot.keyboards.inline import add_delete_button
 
 
 @print_msg
+@rate_limit(limit=3)
 async def output_users_notify(message: types.Message):
     text = ""
     with Database() as db:

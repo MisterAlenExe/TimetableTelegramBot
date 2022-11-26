@@ -3,12 +3,14 @@ import json
 from aiogram import Dispatcher
 
 from tgbot.utils.logger import logger, print_msg
+from tgbot.utils.throttling import rate_limit
 
 from tgbot.database.storage import Database
 from tgbot.keyboards.inline import *
 
 
 @print_msg
+@rate_limit(limit=3)
 async def start(message: types.Message):
     text = "Hello!\n" \
            "I am Timetable Telegram Bot\n\n" \
@@ -19,6 +21,7 @@ async def start(message: types.Message):
 
 
 @print_msg
+@rate_limit(limit=3)
 async def main_menu(message: types.Message):
     text = "Choose one button and click:"
     with Database() as db:
@@ -29,6 +32,7 @@ async def main_menu(message: types.Message):
     await message.reply(text, reply_markup=kb)
 
 
+@rate_limit(limit=3)
 async def timetable_menu(call: types.CallbackQuery):
     if call.data == "timetable" or call.data == "back_to_timetable":
         text = "Choose one day and click:"
