@@ -5,6 +5,7 @@ from pytz_deprecation_shim import PytzUsageWarning
 from aiogram import Bot
 from aiogram.dispatcher import Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiogram.types import BotCommand
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from tgbot.utils.logger import logger
@@ -33,6 +34,14 @@ def register_all_handlers(dp, bot, scheduler):
     register_schedulers(bot, scheduler)
 
 
+async def set_commands(bot):
+    commands = [
+        BotCommand(command="/start", description="Start"),
+        BotCommand(command="/menu", description="Menu"),
+    ]
+    await bot.set_my_commands(commands)
+
+
 async def main():
     warnings.filterwarnings(action="ignore", category=PytzUsageWarning)
     data_config = load_config()
@@ -46,6 +55,8 @@ async def main():
     register_all_middlewares(dp, scheduler)
     register_all_filters(dp)
     register_all_handlers(dp, bot, scheduler)
+
+    await set_commands(bot)
 
     try:
         scheduler.start()
